@@ -108,18 +108,34 @@ body {
 }
 
 /* NOTAS */
+/* ANIMACIÓN DE CAÍDA */
+@keyframes caer {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* NOTAS */
 .nota {
-    position: absolute; /* 🔥 clave */
+    position: absolute;
     background: #fff8c6;
     padding: 15px;
     width: 160px;
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
     font-family: 'Comic Sans MS', cursive;
+    cursor: grab;
+    animation: caer 0.8s ease;
+    user-select: none;
 }
 
-.nota:nth-child(even) {
-    transform: rotate(2deg);
+.nota:active {
+    cursor: grabbing;
 }
 
 
@@ -215,6 +231,34 @@ function actualizarContador() {
 
 setInterval(actualizarContador, 1000);
 
+// HACER NOTAS ARRASTRABLES
+const notas = document.querySelectorAll(".nota");
+
+notas.forEach(nota => {
+    let offsetX, offsetY, isDragging = false;
+
+    nota.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - nota.offsetLeft;
+        offsetY = e.clientY - nota.offsetTop;
+        nota.style.zIndex = 1000;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (isDragging) {
+            nota.style.left = (e.clientX - offsetX) + "px";
+            nota.style.top = (e.clientY - offsetY) + "px";
+        }
+    });
+
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
+});
+
+
+
+	
 </script>
 
 </body>
