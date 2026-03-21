@@ -237,6 +237,7 @@ const notas = document.querySelectorAll(".nota");
 notas.forEach(nota => {
     let offsetX, offsetY, isDragging = false;
 
+    // PC (mouse)
     nota.addEventListener("mousedown", (e) => {
         isDragging = true;
         offsetX = e.clientX - nota.offsetLeft;
@@ -252,6 +253,26 @@ notas.forEach(nota => {
     });
 
     document.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
+
+    // 📱 CELULAR (TOUCH)
+    nota.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        const touch = e.touches[0];
+        offsetX = touch.clientX - nota.offsetLeft;
+        offsetY = touch.clientY - nota.offsetTop;
+    });
+
+    document.addEventListener("touchmove", (e) => {
+        if (isDragging) {
+            const touch = e.touches[0];
+            nota.style.left = (touch.clientX - offsetX) + "px";
+            nota.style.top = (touch.clientY - offsetY) + "px";
+        }
+    });
+
+    document.addEventListener("touchend", () => {
         isDragging = false;
     });
 });
