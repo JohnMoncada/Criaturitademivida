@@ -102,22 +102,20 @@ body {
 }
 
 .tablero {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 350px;
+    position: relative;
+    width: 100%;
+    height: 100vh;
 }
 
 /* NOTAS */
 .nota {
+    position: absolute; /* 🔥 clave */
     background: #fff8c6;
     padding: 15px;
-    width: 150px;
+    width: 160px;
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
-    transform: rotate(-2deg);
     font-family: 'Comic Sans MS', cursive;
-    position: relative;
 }
 
 .nota:nth-child(even) {
